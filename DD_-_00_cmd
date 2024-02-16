@@ -1,0 +1,28 @@
+#!/bin/bash
+
+sudo tar --exclude='/Users/andrew.thomas/gg' --exclude='/Users/andrew.thomas/Google Drive' -cjf /Users/andrew.thomas/gg/zz_back-ups/4-week-rotation_once-per-week/$(date +%s___week_%w___date_%y_%m_%d___time_%H_%M_%S).tar.bz2 /Users/andrew.thomas/
+
+
+myVar=$(date +%s | cut -c 1-5)
+
+numToMinus=26
+
+numToCompare="$((myVar-numToMinus))"
+
+
+ls -1 *.tar.bz2 | while read i ; do
+	
+	prefix=$(echo ${i} | cut -c 1-5)
+	echo -n 'Prefix = '
+	echo $prefix
+	echo
+
+	if [[ $prefix -lt $numToCompare ]]; then
+		echo "dry run is currently hard-coded"
+		echo "__ rm -v ${i} __"
+	fi
+done
+
+echo
+echo 'Finished the While loop'
+echo
